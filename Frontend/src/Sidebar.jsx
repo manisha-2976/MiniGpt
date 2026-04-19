@@ -47,7 +47,7 @@ function Sidebar() {
         setCurrThreadId(newThreadId);
 
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${newThreadId}`,
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/thread/${newThreadId}`,
                 { credentials: "include" });
             const res = await response.json();
             console.log(res);
@@ -61,7 +61,7 @@ function Sidebar() {
 
     const deleteThread = async (threadId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${threadId}`, { method: "DELETE", credentials: "include" });
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/thread/${threadId}`, { method: "DELETE", credentials: "include" });
             const res = await response.json();
             console.log(res);
 
@@ -82,7 +82,7 @@ function Sidebar() {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch("http://localhost:8080/user/logout", { method: "POST", credentials: "include" });
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/user/logout`, { method: "POST", credentials: "include" });
             console.log("user logged out")
             await fetchUser();
 
