@@ -19,7 +19,7 @@ function App() {
    // FETCH LOGGED-IN USER 
   const fetchUser = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/user/me`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/user/me`, {
         withCredentials: true
       });
       setUser(res.data);

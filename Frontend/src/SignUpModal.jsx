@@ -6,7 +6,7 @@ const SignUpModal = ({ isOpen, onClose, openLogin, fetchUser }) => {
   const onSubmit = async (data) => {
         try {
             console.log(data);
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/user/signup`, 
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/user/signup`, 
               {
                 method: "POST",
                 headers: {
