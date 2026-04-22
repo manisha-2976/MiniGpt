@@ -63,8 +63,10 @@
 
     .sidebar.collapsed .sign .login-btn{
         position: fixed;
-        bottom: 0;
-        left: 0;
+        bottom: 1rem;
+        left: .5rem;
+        width: 3rem;
+        border: solid 0.5px rgba(255, 255, 255, 0.5);
         font-size: 14px;
         padding:  5.5px 5px 5.5px 5px;
         border-radius: 50%;
