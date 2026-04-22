@@ -5,7 +5,7 @@ import { useContext, useState, useEffect } from "react";
 import {ScaleLoader} from "react-spinners";
 
 function ChatWindow() {
-    const {prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat} = useContext(MyContext);
+    const {prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat, sidebarOpen} = useContext(MyContext);
     const [loading, setLoading] = useState(false);
 
     const getReply = async () => {
@@ -56,9 +56,9 @@ function ChatWindow() {
 
 
     return (
-        <div className="chatWindow">
+        <div className={`chatWindow ${sidebarOpen ? "withSidebar" : "full"}`}>
             <div className="navbar">
-                <span>MiniGPT <i className="fa-solid fa-chevron-down"></i></span>
+                <span className="minigpt">MiniGPT <i className="fa-solid fa-chevron-down"></i></span>
             </div>
             <Chat></Chat>
 

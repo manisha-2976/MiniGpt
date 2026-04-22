@@ -1,4 +1,5 @@
 .chats {
+    margin: 0 20px 0 20px;
     max-width: 800px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -12,28 +13,44 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    font-size: 1rem;
 }
 
 .gptDiv {
     width: 100%;
     text-align: left;
-    font-size: 1rem;
+}
+
+.gptDiv p {
+    max-width: 75%;
+    word-wrap: break-word;
 }
 
 .userMessage {
     background-color: #323232;
     padding: 10px 20px;
     border-radius: 14px;
-    margin-left: 15rem;
-    max-width: 500px;
+    max-width: 70%;
     width: fit-content;
+    word-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .hljs {
     border-radius: 14px !important;
+    overflow-x: auto;
 }
 
 pre {
     white-space: pre-wrap;
+    word-break: break-word;
+}
+
+@media (max-width: 768px) {
+    .userMessage {
+        max-width: 85%;
+    }
+
+    .gptDiv p {
+        max-width: 90%;
+    }
 }

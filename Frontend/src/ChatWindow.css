@@ -1,16 +1,30 @@
 .chatWindow {
     background-color: #212121;
     height: 100vh;
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    text-align: center;
+}
+
+.withSidebar {
+    flex: 1;
+}
+
+.full {
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .navbar{
+        display: flex;
+        margin-top: 5px;
+        justify-content: flex-end !important;
+    }
 }
 
 /* navbar */
-
 .navbar {
     width: 100%;
     display: flex;
@@ -39,6 +53,8 @@
 
 /* chat input */
 .chatInput {
+    padding-left: 20px;
+    padding-right: 20px;
     width: 100%;
     display: flex;
     flex-direction: column;

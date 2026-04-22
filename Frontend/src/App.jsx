@@ -14,9 +14,9 @@ function App() {
   const [newChat, setNewChat] = useState(true);
   const [allThreads, setAllThreads] = useState([]);
   const [user, setUser] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-   // FETCH LOGGED-IN USER
-   console.log(import.meta.env.VITE_API_URL) 
+   // FETCH LOGGED-IN USER 
   const fetchUser = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/user/me`, { credentials: "include" });
@@ -43,14 +43,15 @@ function App() {
     newChat, setNewChat,
     prevChats, setPrevChats,
     allThreads, setAllThreads,
+    sidebarOpen, setSidebarOpen,
     user, setUser, fetchUser
   }; 
 
   return (
     <div className='app'>
       <MyContext.Provider value={providerValues}>
-          <Sidebar></Sidebar>
-          <ChatWindow></ChatWindow>
+          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <ChatWindow sidebarOpen={sidebarOpen} />
         </MyContext.Provider>
     </div>
   )
