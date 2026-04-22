@@ -3,8 +3,8 @@ import User from "../models/Users.js";
 import  { isLoggedIn } from "../middleware.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
 const isProd = process.env.NODE_ENV === "production";
+
 const router = express.Router();
 
 router.get("/me", isLoggedIn, (req, res) => {
