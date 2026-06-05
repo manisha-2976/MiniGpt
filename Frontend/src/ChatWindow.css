@@ -55,7 +55,7 @@
 .chatInput {
     padding-left: 20px;
     padding-right: 20px;
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -76,6 +76,7 @@
     border: none;
     background-color: rgba(255, 255, 255, 0.05);
     padding: 20px;
+    padding-right: 70px;
     font-size: 0.9rem;
     border-radius: 14px;
     box-shadow: rgba(0, 0, 0, 0.05) 0 54px 55px,
@@ -99,10 +100,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
+    border: none;
+    background-color: transparent;
 }
 
 #submit i:hover {
     color: #fff;
+    /* color: #339cff; */
+}
+
+#submit:disabled {
+    opacity: 0.45;
+    filter: grayscale(30%);
+}
+
+#submit:disabled i:hover {
+    color: inherit;
 }
 
 .info {

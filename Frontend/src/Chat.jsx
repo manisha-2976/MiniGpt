@@ -8,6 +8,7 @@ import "highlight.js/styles/github-dark.css";
 function Chat() {
     const {newChat, prevChats, reply} = useContext(MyContext);
     const [latestReply, setLatestReply] = useState(null);
+    const chatsRef = React.useRef(null);
 
     useEffect(() => {
         if(reply === null) {
@@ -31,10 +32,17 @@ function Chat() {
 
     }, [prevChats, reply])
 
+    // auto-scroll to bottom when prevChats changes
+    useEffect(() => {
+        if (chatsRef.current) {
+            chatsRef.current.scrollTop = chatsRef.current.scrollHeight;
+        }
+    }, [prevChats, latestReply]);
+
     return (
         <>
             {newChat && <h1>Start a New Chat!</h1>}
-            <div className="chats">
+            <div className="chats" ref={chatsRef}>
                 {
                     prevChats?.slice(0, -1).map((chat, idx) => 
                         <div className={chat.role === "user"? "userDiv" : "gptDiv"} key={idx}>

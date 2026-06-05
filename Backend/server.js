@@ -14,6 +14,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",
+    "http://localhost:5175",
     "https://mini-gpt-jade.vercel.app"],
   credentials: true
 }));

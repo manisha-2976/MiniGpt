@@ -3,15 +3,10 @@ import { useContext, useEffect } from "react";
 import { MyContext } from "./MyContext.jsx";
 import { v1 as uuidv1 } from "uuid";
 import { useState } from "react";
-import LoginModal from "./LoginModal";
-import SignUpModal from "./SignUpModal";
 import logo from "./assets/minigpt.png";
 
-function Sidebar() {
+function Sidebar({ onOpenLogin }) {
     const { user, fetchUser, allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setCurrThreadId, setPrevChats, sidebarOpen, setSidebarOpen } = useContext(MyContext);
-
-    const [openLogin, setOpenLogin] = useState(false);
-    const [openSignup, setOpenSignup] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
     const getAllThreads = async () => {
@@ -48,9 +43,9 @@ function Sidebar() {
         setCurrThreadId(newThreadId);
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/thread/${newThreadId}`,
+            const responseRaw = await fetch(`${import.meta.env.VITE_API_URL}/api/thread/${newThreadId}`,
                 { credentials: "include" });
-            const res = await response.json();
+            const res = await responseRaw.json();
             console.log(res);
             setPrevChats(res);
             setNewChat(false);
@@ -62,8 +57,10 @@ function Sidebar() {
 
     const deleteThread = async (threadId) => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/thread/${threadId}`, { method: "DELETE", credentials: "include" });
-            const res = await response.json();
+            const responseRaw = await fetch(`${import.meta.env.VITE_API_URL}/api/thread/${threadId}`, 
+            { method: "DELETE", credentials: "include" });
+
+            const res = await responseRaw.json();
             console.log(res);
 
             //updated threads re-render
@@ -83,7 +80,7 @@ function Sidebar() {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/user/logout`, { method: "POST", credentials: "include" });
+            await fetch(`${import.meta.env.VITE_API_URL}/user/logout`, { method: "POST", credentials: "include" });
             console.log("user logged out")
             await fetchUser();
 
@@ -97,29 +94,28 @@ function Sidebar() {
     };
 
     return (
-        <div>
+        <div className="sidebar-container">
             {!sidebarOpen && (
-                <button className="hamburger" onClick={() => setSidebarOpen(true)}>
-                    <i class="fa-solid fa-bars"></i>
+                <button className="hamburger" onClick={() => setSidebarOpen(true)} aria-label="Open sidebar">
+                    <i className="fa-solid fa-bars"></i>
                 </button>
             )}
-            {sidebarOpen && (
-                <div
-                    className="overlay"
-                    onClick={() => setSidebarOpen(false)}
-                ></div>
-            )}
+            
+            <div
+                className={`overlay ${sidebarOpen ? 'visible' : ''}`}
+                onClick={() => setSidebarOpen(false)}
+            ></div>
 
             <section className={`sidebar ${sidebarOpen ? "open" : "collapsed"}`}>
-                <button className="top-btn">
-                    <img src={logo} alt="gpt logo" className="logo"></img>
+                <button className="top-btn btn">
+                    <img src={logo} alt="gpt logo" className="logo" />
                     <span className="collapse-btn"
                         onClick={() => setSidebarOpen(prev => !prev)}>
-                        <i class="fa-solid fa-left-right"></i>
+                        <i className="fa-solid fa-left-right"></i>
                     </span>
                 </button>
 
-                <button className="newchat-btn" onClick={createNewChat}>
+                <button className="newchat-btn btn" onClick={createNewChat}>
                     <span><i className="fa-solid fa-pen-to-square"></i></span><p>New Chat</p>
                 </button>
 
@@ -130,7 +126,7 @@ function Sidebar() {
                             <li key={idx} onClick={(e) => changeThread(thread.threadId)}
                                 className={thread.threadId === currThreadId ? "highlighted" : " "}
                             >
-                                {thread.title}
+                                <span className="threadTitle">{thread.title}</span>
                                 <i className="fa-solid fa-trash"
                                     onClick={(e) => {
                                         e.stopPropagation(); //stop event bubbling
@@ -164,30 +160,10 @@ function Sidebar() {
                         <div>
                             <p className="login-info muted">Log in to get answers based on saved chats, plus create images and upload files.</p>
 
-                            <button className="login-btn" onClick={() => setOpenLogin(true)}>
+                            <button className="login-btn btn" onClick={() => onOpenLogin && onOpenLogin()}>
                                 Log in
                             </button>
                         </div>)}
-
-                    <LoginModal
-                        isOpen={openLogin}
-                        onClose={() => setOpenLogin(false)}
-                        openSignup={() => {
-                            setOpenLogin(false);
-                            setOpenSignup(true);
-                        }}
-                        fetchUser={fetchUser}
-                    />
-
-                    <SignUpModal
-                        isOpen={openSignup}
-                        onClose={() => setOpenSignup(false)}
-                        openLogin={() => {
-                            setOpenSignup(false);
-                            setOpenLogin(true);
-                        }}
-                        fetchUser={fetchUser}
-                    />
                 </div>
             </section>
         </div>

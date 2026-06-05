@@ -2,10 +2,10 @@ import "./ChatWindow.css";
 import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
 import { useContext, useState, useEffect } from "react";
-import {ScaleLoader} from "react-spinners";
+import { ScaleLoader } from "react-spinners";
 
 function ChatWindow() {
-    const {prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat, sidebarOpen} = useContext(MyContext);
+    const { prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat, sidebarOpen } = useContext(MyContext);
     const [loading, setLoading] = useState(false);
 
     const getReply = async () => {
@@ -30,14 +30,13 @@ function ChatWindow() {
             const res = await response.json();
             console.log(res);
             setReply(res.reply);
-        } catch(err) {
+        } catch (err) {
             console.log(err);
         }
         setLoading(false);
     }
 
-    //Append new chat to prevChats
-    useEffect(() => {
+     useEffect(() => {
         if(prompt && reply) {
             setPrevChats(prevChats => (
                 [...prevChats, {
@@ -60,21 +59,25 @@ function ChatWindow() {
             <div className="navbar">
                 <span className="minigpt">MiniGPT <i className="fa-solid fa-chevron-down"></i></span>
             </div>
-            <Chat></Chat>
+            <Chat />
 
-            <ScaleLoader color="#fff" loading={loading}>
-            </ScaleLoader>
-            
+            <ScaleLoader color="#fff" loading={loading} />
+
+
             <div className="chatInput">
                 <div className="inputBox">
-                    <input placeholder="Ask anything"
+                    <input
+                        placeholder="Ask anything"
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter'? getReply() : ''}
+                        onKeyDown={(e) => e.key === 'Enter' ? getReply() : ''}
+                        disabled={loading}
                     >
-                           
+
                     </input>
-                    <div id="submit" onClick={getReply}><i className="fa-solid fa-paper-plane"></i></div>
+                    <button id="submit" onClick={getReply} disabled={loading || !prompt} >
+                        <i  className="fa-solid fa-paper-plane"></i>
+                    </button>
                 </div>
                 <p className="info">
                     MiniGPT can make mistakes. Check important info. See Cookie Preferences.

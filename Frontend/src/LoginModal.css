@@ -13,17 +13,12 @@
   z-index: 1000;
 }
 
-* {
-  box-sizing: border-box;
-  /* border: 1px solid palevioletred; */
-}
-
 /* Modal box */
 .modal-container {
   background-color: #171717;
   color: #b4b4b4;
   width: 100%;
-  max-width: 380px;
+  max-width: 350px;
   padding: 25px;
   border-radius: 10px;
   animation: fadeIn 0.3s ease-in-out;
@@ -50,28 +45,23 @@
 }
 
 /* Form */
-.modal-form {
-  display: flex;
-  flex-direction: column;
-}
 
-.form-input {
+.input {
   width: 100%;
-  margin-bottom: 10px;
-}
-
-.form-input>div {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.form-input input {
-  width: 100%;
-  padding: 15px;
   border-radius: 6px;
-  border: 0.5px solid rgba(255, 255, 255, 0.5);
   font-size: 14px;
   background-color: rgba(255, 255, 255, 0.05);
+  margin-bottom: 10px;
+}
+
+.input input {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background-color: transparent;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 14px;
+  box-sizing: border-box;
 }
 
 .form-input input:focus {
@@ -86,9 +76,15 @@
 }
 
 /* Buttons */
-.btn button {
+.modal-btn{
   border-radius: 20px;
-  margin-top: 10px !important;
+  margin-top: 10px;
+  background-color: white;
+  padding: 10px;
+  width: 100%;
+  color: #323232;
+  display: flex;
+  justify-content: center;
 }
 
 /* Animation */
@@ -115,7 +111,7 @@
     font-size: 18px;
   }
 
-  .btn {
+  .modal-btn {
     padding: 8px;
     font-size: 14px;
   }

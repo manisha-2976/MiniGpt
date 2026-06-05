@@ -1,29 +1,27 @@
 import { useForm } from "react-hook-form";
 
 const SignUpModal = ({ isOpen, onClose, openLogin, fetchUser }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { isSubmitting, errors } } = useForm();
 
   const onSubmit = async (data) => {
-        try {
-            console.log(data);
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/user/signup`, 
-              {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                credentials: "include",
-                body: JSON.stringify(data)
-            });
-            
-            await fetchUser();
-            onClose();
-        } catch (err) {
-          console.log(err);
-            const message = err.response?.data?.message;
-            console.log("SERVER ERROR:", message);
-        }
-    };
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL}/user/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify(data)
+      });
+
+      await fetchUser();
+      onClose();
+    } catch (err) {
+      console.log(err);
+      const message = err?.message || "Server error";
+      console.log("SERVER ERROR:", message);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -34,15 +32,15 @@ const SignUpModal = ({ isOpen, onClose, openLogin, fetchUser }) => {
           type="button"
           className="close-btn"
           onClick={onClose}
+          aria-label="Close signup dialog"
         >
-          <i class="fa-solid fa-xmark"></i>
+          <i className="fa-solid fa-xmark"></i>
         </button>
         <h2 className="modal-title">Sign Up</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="modal-form">
-        <div className="form-input">
+        <form onSubmit={handleSubmit(onSubmit)}>
 
-          <div>
+          <div className="input">
             <input
               type="text"
               placeholder="First Name"
@@ -56,7 +54,7 @@ const SignUpModal = ({ isOpen, onClose, openLogin, fetchUser }) => {
           </div>
 
           {/* Last Name */}
-          <div>
+          <div className="input">
             <input
               type="text"
               placeholder="Last Name"
@@ -70,7 +68,7 @@ const SignUpModal = ({ isOpen, onClose, openLogin, fetchUser }) => {
           </div>
 
           {/* Email */}
-          <div>
+          <div className="input">
             <input
               type="email"
               placeholder="Email"
@@ -84,7 +82,7 @@ const SignUpModal = ({ isOpen, onClose, openLogin, fetchUser }) => {
           </div>
 
           {/* Password */}
-          <div>
+          <div className="input">
             <input
               type="password"
               placeholder="Password"
@@ -101,25 +99,22 @@ const SignUpModal = ({ isOpen, onClose, openLogin, fetchUser }) => {
             )}
           </div>
 
-        </div>
 
-        {/* Buttons */}
-        <div className="btn">
-          <button type="submit" className="primary-btn">
-            Sign Up
+          {/* Buttons */}
+          <button type="submit" className="modal-btn" disabled={isSubmitting}>
+            {isSubmitting ? "Signing up..." : "Sign Up"}
           </button>
 
           <button
             type="button"
-            className="secondary-btn"
+            className="modal-btn"
             onClick={openLogin}
           >
             Back to Login
           </button>
-        </div>
-      </form>
-      </div>
-    </div>
+        </form>
+      </div >
+    </div >
   );
 };
 
